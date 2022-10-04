@@ -2,7 +2,7 @@
     "name": "phpnova/db",
     "description": "\"Libreria para el manejo de consulta a la base de datos mysql y postgresql\"",
     "type": "library",
-    "license": "GLP-3.0-only",
+    "license": "GPL-3.0-only",
     "autoload": {
         "psr-4": {
             "PHPNova\\Db\\": "src/"
