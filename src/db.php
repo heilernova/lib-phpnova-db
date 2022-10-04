@@ -1,6 +1,8 @@
 <?php
 namespace PHPNova\Db;
 
+use PDO;
+
 class db
 {
     /**
@@ -22,8 +24,8 @@ class db
         return new DbConnect();
     }
 
-    public static function ConnectPDO(){
-
+    public static function setDefaultPDO(PDO $pdo): void {
+        $_ENV['nvx-db']['pdo'] = $pdo;
     }
 
     public function setParceExecuteCamelCaseToSnakeCase(): void {
