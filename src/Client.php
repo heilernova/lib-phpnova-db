@@ -44,7 +44,7 @@ class Client
                 $config['writing-style-result'] = $_ENV['nvx-db']['writing-style']['result'];
             }
 
-            $config['dns-type'] = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $config['dns-type'] = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
 
             $this->_config = $config;
 
