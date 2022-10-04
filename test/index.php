@@ -9,11 +9,12 @@ try {
     //code...
     
     $pdo = db::connect()->mysql('localhost', 'root', '', 'data_services');
+    // db::setParceResultSnakeCaseToCamelCase();
     
     $client = new Client($pdo);
     
     
-    $result = $client->executeCommand("SELECT * FROM address_vi_list WHERE code = ?", [ '97' ]);
+    $result = $client->executeCommand("SELECT * FROM persons_tb_naturals");
 
     $content = json_encode($result->rows, 128);
     header('Content-Type: application/json; charse=utf-8');

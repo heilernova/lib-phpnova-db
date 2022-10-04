@@ -35,11 +35,11 @@ class db
         $_ENV['nvx-db']['config']['writing-style-execute'] = "snakecase";
     }
 
-    public function setParceResultSnakeCaseToCamelCase(): void {
-        $_ENV['nvx-db']['config']['writing-style-execute'] = "camelcase";
+    public static function setParceResultSnakeCaseToCamelCase(): void {
+        $_ENV['nvx-db']['writing-style']['result'] = "snakecase-camelcase";
     }
 
     public function setParceResultCamelCaseToSnakeCase(): void {
-        $_ENV['nvx-db']['config']['writing-style-execute'] = "snakecase";
+        $_ENV['nvx-db']['writing-style']['result'] = "snakecase";
     }
 }

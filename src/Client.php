@@ -25,17 +25,28 @@ class Client
                 }
             }
 
-            if (is_string($_ENV['nvx-db']['timezone'])){
-                $this->setTimezone($_ENV['nvx-db']['timezone']);
+            $timezone = $_ENV['nvx-db']['timezone'];
+
+            if (array_key_exists('timezonte', $config)){
+                $timezone = $config['timezonte'];
+            }
+
+            if ($timezone){
+                $this->setTimezone($timezone);
             }
 
             # writing style
+            if ($_ENV['nvx-db']['writing-style']['send']){
+                $config['writing-style-send'] = $_ENV['nvx-db']['writing-style']['send'];
+            }
 
-            // $writing_style = $config['writing-style'];
-            // $this->_config = $config;
+            if ($_ENV['nvx-db']['writing-style']['result']){
+                $config['writing-style-result'] = $_ENV['nvx-db']['writing-style']['result'];
+            }
 
-            $this->_config['dns-type'] = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-            // $this->pdo->
+            $config['dns-type'] = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+            $this->_config = $config;
 
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());
