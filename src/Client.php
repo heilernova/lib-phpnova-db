@@ -118,8 +118,7 @@ class Client
 
     private function mapTableName(?string $table):string{
         try{
-            return $table ? $table : $this->tableDefaultName;
-
+            return $table ? $table : $this->defaultTable;
         } catch(\Throwable $e){
             throw new Exception("No se a definido el nombre de la tabla por defecto en: " . Client::class . "->setDefaultTable");
         }
@@ -139,12 +138,19 @@ class Client
 
     public function executeInsert(array|object $values, string|null $table = null, array|string|null $returning = null): Result|false {
         try {
+            $table = $this->mapTableName($table);
             $fields = "";
             $values_string = "";
             $params = [];
         
             foreach($values as $key => $val){
-        
+                if ($_ENV['nvx-db']['writing-style']['send']){
+                    $x = $_ENV['nvx-db']['writing-style']['send'];
+                    if ($x == "camelcase-snakecase"){
+                        require_once __DIR__ . '/Funcs/nvx_db_camecase_to_snakecase.php';
+                        $key = nvx_db_camecase_to_snakecase($key);
+                    }
+                }
                 $fields .= ", `$key`";
                 if (is_bool($val)){
                     $values_string .= ", " . ($val ? 'TRUE' : 'FALSE');
@@ -153,6 +159,9 @@ class Client
                     $params[$key] = $val;
                 }
             }
+
+            $fields = ltrim($fields, ', ');
+            $values_string = ltrim($values_string, ', ');
 
             $sql_returning="";
             if ($returning){

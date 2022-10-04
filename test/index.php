@@ -9,10 +9,12 @@ try {
     //code...
     
     $pdo = db::connect()->mysql('localhost', 'root', '', 'data_services');
-    // db::setParceResultSnakeCaseToCamelCase();
+    db::setParceResultSnakeCaseToCamelCase();
+    db::setParceExecuteCamelCaseToSnakeCase();
     
     $client = new Client($pdo);
     
+    $client->executeInsert(['dni' => '1007244089', 'dniType' => 'CC', 'name' => 'Heiler', 'lastName' => 'Nova'], 'persons_tb_naturals');
     
     $result = $client->executeCommand("SELECT * FROM persons_tb_naturals");
 

@@ -28,18 +28,18 @@ class db
         $_ENV['nvx-db']['pdo'] = $pdo;
     }
 
-    public function setParceExecuteCamelCaseToSnakeCase(): void {
-        $_ENV['nvx-db']['config']['writing-style-execute'] = "snakecase";
+    public static function setParceExecuteCamelCaseToSnakeCase(): void {
+        $_ENV['nvx-db']['writing-style']['send'] = "camelcase-snakecase";
     }
-    public function setParceExecuteSnakeCaseToCamelCase(): void {
-        $_ENV['nvx-db']['config']['writing-style-execute'] = "snakecase";
+    public static function setParceExecuteSnakeCaseToCamelCase(): void {
+        $_ENV['nvx-db']['writing-style']['send'] = "snakecase-camelcase";
     }
 
     public static function setParceResultSnakeCaseToCamelCase(): void {
         $_ENV['nvx-db']['writing-style']['result'] = "snakecase-camelcase";
     }
 
-    public function setParceResultCamelCaseToSnakeCase(): void {
-        $_ENV['nvx-db']['writing-style']['result'] = "snakecase";
+    public static function setParceResultCamelCaseToSnakeCase(): void {
+        $_ENV['nvx-db']['writing-style']['result'] = "camelcase-snakecase";
     }
 }
