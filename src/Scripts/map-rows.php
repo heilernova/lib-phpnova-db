@@ -17,7 +17,7 @@ return $stmt->fetchAll(PDO::FETCH_FUNC, function() use ($stmt, $dnsType, $config
                     $value = (float)$value;
                 } else if ($native_type == 'BLOB' || $native_type == 'VAR_STRING'){
                     if (is_string($value)){
-                        if (preg_match('/^\{.+\}/', $value) || preg_match('/^\[.+\]/', $value)){
+                        if (preg_match('/^\{?.+\}/', $value) || preg_match('/^\[?.+\]/', $value)){
                             $json = json_decode($value);
                             if (json_last_error() == JSON_ERROR_NONE){
                                 $value = $json;
