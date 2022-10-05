@@ -16,7 +16,7 @@ class Result
             $rows = require __DIR__ . '/Scripts/map-rows.php';
 
             $this->rows = $rows;
-            $this->rowsCount = $stmt->rowCount();
+            $this->rowCount = $stmt->rowCount();
 
         } catch (\Throwable $th) {
             throw $th;
