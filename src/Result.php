@@ -9,15 +9,11 @@ class Result
     public readonly array $rows;
     public readonly array $fields;
 
-    public function __construct(PDOStatement $stmt, $config)
+    public function __construct(PDOStatement $stmt, array $config)
     {
         try {
-            
-            $rows = require __DIR__ . '/Scripts/map-rows.php';
-
-            $this->rows = $rows;
+            $this->rows =  require __DIR__ . '/Scripts/map-rows.php';
             $this->rowCount = $stmt->rowCount();
-
         } catch (\Throwable $th) {
             throw $th;
         }

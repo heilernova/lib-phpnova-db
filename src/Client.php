@@ -183,7 +183,7 @@ class Client
         }
     }
 
-    public function executeUpdate(array|object $values, string $condition, ?array $conditionParams = null, ?string $table = null): void {
+    public function executeUpdate(array|object $values, string $condition, ?array $conditionParams = null, ?string $table = null): Result|null {
         try {
             $table = $this->mapTableName($table);
             $sql_values = "";
@@ -228,6 +228,7 @@ class Client
 
             # Ejecutamos la consulta SQL
             $stmt = $this->execute("UPDATE `$table` SET $sql_values WHERE $sql_condition", [... $value_params, ...$sql_condition_params]);
+            return $stmt ? new Result($stmt, $this->_config) : null;
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());
         }
@@ -245,7 +246,7 @@ class Client
 
             }
             $stmt = $this->execute("SELECT $fields FROM `$table`" . ($condition ? " WHERE $condition" : ''), $params);
-            return $stmt ? new Result($stmt, $this->dirverName, $this->_handdleRowValue) : false;
+            return $stmt ? new Result($stmt, $this->_config) : false;
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());
         }
@@ -255,7 +256,8 @@ class Client
         try {
             $table = $this->mapTableName($table);
             $stmt = $this->execute("DELETE FROM `$table` WHERE $condition", $params);
-            return $stmt ? new Result($stmt, $this->dirverName, $this->_config) : false;
+            
+            return $stmt ? new Result($stmt, $this->_config) : false;
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());
         }
@@ -265,7 +267,7 @@ class Client
         try {
             $values = $params ? str_repeat(', ?', count($params)) : '';
             $stmt = $this->execute("CALL $name($values)");
-            return $stmt ? new Result($stmt, $this->dirverName, $this->_config) : false;
+            return $stmt ? new Result($stmt, $this->_config) : false;
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());
         }
@@ -275,7 +277,7 @@ class Client
         try {
             $values = $params ? str_repeat(', ?', count($params)) : '';
             $stmt = $this->execute("SELECT $name($values)");
-            return $stmt ? new ResultFunction($stmt, $this->dirverName) : false;
+            return $stmt ? new Result($stmt, $this->_config) : false;
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());
         }
