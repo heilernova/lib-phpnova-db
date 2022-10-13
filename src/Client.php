@@ -96,6 +96,13 @@ class Client
         $stmt = $this->pdo->prepare($sql);
 
         try {
+
+            foreach ($params as $key => $val){
+                if (is_object($val) || is_array($val)){
+                    $params[$key] = json_encode($val);
+                }
+            }
+
             $stmt->execute($params);
 
             return $stmt;
