@@ -198,6 +198,13 @@ class Client
 
 
             foreach($values as $key => $val){
+                if ($_ENV['nvx-db']['writing-style']['send']){
+                    $x = $_ENV['nvx-db']['writing-style']['send'];
+                    if ($x == "camelcase-snakecase"){
+                        require_once __DIR__ . '/Funcs/nvx_db_camecase_to_snakecase.php';
+                        $key = nvx_db_camecase_to_snakecase($key);
+                    }
+                }
                 if (is_bool($val)){
                     $sql_values .= ", `$key` = " . ($val ? 'TRUE' : 'FALSE');
                 }else {

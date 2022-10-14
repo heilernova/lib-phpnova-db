@@ -8,15 +8,19 @@ use PHPNova\Db\db;
 try {
     //code...
     
-    $pdo = db::connect()->mysql('localhost', 'root', '', 'data_services');
-    db::setParceResultSnakeCaseToCamelCase();
-    db::setParceExecuteCamelCaseToSnakeCase();
+    $pdo = db::connect()->mysql('localhost', 'root', '', 'la_casa_imperial');
+    // db::setParceResultSnakeCaseToCamelCase();
+    // db::setParceExecuteCamelCaseToSnakeCase();
+    // db::setTimezone('+05:00');
     
     $client = new Client($pdo);
+
+    $client->setTimezone('-05:00');
     
-    $client->executeInsert(['dni' => '1007244089', 'dniType' => 'CC', 'name' => 'Heiler', 'lastName' => 'Nova'], 'persons_tb_naturals');
+    // $client->executeInsert(['dni' => '1007244089', 'dniType' => 'CC', 'name' => 'Heiler', 'lastName' => 'Nova'], 'persons_tb_naturals');
     
-    $result = $client->executeCommand("SELECT * FROM persons_tb_naturals");
+    $result = $client->executeDelete('id = ?', [1], 'tb_admin_users_access');
+    // $result = $client->executeCommand("SELECT now()");
 
     $content = json_encode($result->rows, 128);
     header('Content-Type: application/json; charse=utf-8');
