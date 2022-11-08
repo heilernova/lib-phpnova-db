@@ -241,7 +241,7 @@ class Client
             }
 
             # Ejecutamos la consulta SQL
-            $stmt = $this->execute("UPDATE `$table` SET $sql_values WHERE $sql_condition", [... $value_params, ...$sql_condition_params]);
+            $stmt = $this->execute("UPDATE `$table` SET $sql_values WHERE $sql_condition", array_merge($value_params, $sql_condition_params));
             return $stmt ? new Result($stmt, $this->_config) : null;
         } catch (\Throwable $th) {
             throw new DbException($th->getMessage(), $th->getCode());

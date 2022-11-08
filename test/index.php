@@ -8,7 +8,7 @@ use PHPNova\Db\db;
 try {
     //code...
     
-    $pdo = db::connect()->mysql('localhost', 'root', '', 'la_casa_imperial');
+    $pdo = db::connect()->mysql('localhost', 'root', '', 'ftc_assosiations');
     // db::setParceResultSnakeCaseToCamelCase();
     // db::setParceExecuteCamelCaseToSnakeCase();
     // db::setTimezone('+05:00');
@@ -19,7 +19,7 @@ try {
     
     // $client->executeInsert(['dni' => '1007244089', 'dniType' => 'CC', 'name' => 'Heiler', 'lastName' => 'Nova'], 'persons_tb_naturals');
     
-    $result = $client->executeDelete('id = ?', [1], 'tb_admin_users_access');
+    $result = $client->executeSelect( table:'tb_associations_affiliates');
     // $result = $client->executeCommand("SELECT now()");
 
     $content = json_encode($result->rows, 128);
